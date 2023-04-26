@@ -1,0 +1,89 @@
+@font-face {
+  font-family: "sohne";
+  src: url("./assets/fonts/sohne/TestSohne-Buch.otf");
+}
+* {
+  padding: 0;
+  margin: 0;
+  /* background: #E5E5E5; */
+}
+body {
+  font-family: "sohne";
+  
+}
+.dashboard-container {
+  width: 100%;
+  height: 100vh;
+}
+.dashboard-txt{
+  font-weight: bold;
+}
+/* Hide the scrollbar track */
+.sidebar::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* Style the scrollbar thumb */
+.sidebar::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #ccc;
+}
+
+/* Set the scrollbar width */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+/* Hide the scrollbar track */
+.main-content::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* Style the scrollbar thumb */
+.main-content::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: #ccc;
+}
+
+/* Set the scrollbar width */
+.main-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+
+.filter-buttons {
+  display: flex;
+}
+
+.filter-button__btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 40px;
+  background: #ffffff;
+  border: 1px solid #eff1f6;
+  border-radius: 100px;
+  background-color: transparent;
+  margin-right: 10px;
+  color: #31373d;
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: bold;
+}
+
+.active-btn {
+  background: #ffeee6;
+  border: 1px solid #ff5403;
+  color: #ff5403;
+}
+
+.graph-chart{
+  background-color: #ffffff;
+}
+
+.bold-font{
+  font-weight: bold;
+}
