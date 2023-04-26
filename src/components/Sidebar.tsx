@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {ImUsers} from 'react-icons/im'
+import { ImUsers } from "react-icons/im";
 import { TbCameraPlus } from "react-icons/tb";
 import { AiOutlineEllipsis } from "react-icons/ai";
 import { BiPencil } from "react-icons/bi";
@@ -13,6 +13,7 @@ import { BsCollectionPlay } from "react-icons/bs";
 import logoImg from "../assets/images/mainstack-logo.png";
 import avatar from "../assets/images/avatar.png";
 import "../App.css";
+import { MenuProps } from "../interface/interface";
 
 interface MenuItemProps {
   icon?: IconType;
@@ -22,13 +23,8 @@ interface MenuItemProps {
   onClick?: () => void;
 }
 
-const Sidebar: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const Sidebar: React.FC<MenuProps> = ({ isMenuOpen, toggleMenu }) => {
   const [activeItem, setActiveItem] = useState("home");
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
   const MenuItem: React.FC<MenuItemProps> = ({
     icon,
@@ -58,11 +54,19 @@ const Sidebar: React.FC = () => {
               }`,
             })}
           <span className={`${isActive ? "text-[#FF5403]" : ""}`}>
-            <span className={`${onClick ? "text-base text-bold" : "text-[12px]"}`}>{text}</span>
+            <span
+              className={`${onClick ? "text-base text-bold" : "text-[12px]"}`}
+            >
+              {text}
+            </span>
             {badge && (
-              <span className={` rounded-full px-[5px] py-[2.5px] ml-10  text-xs ${
-                isActive ? "text-[#FF5403] bg-[#ede0da]" : "text-[#56616B] bg-[#EFF1F6]"
-              }`}>
+              <span
+                className={` rounded-full px-[5px] py-[2.5px] ml-10  text-xs ${
+                  isActive
+                    ? "text-[#FF5403] bg-[#ede0da]"
+                    : "text-[#56616B] bg-[#EFF1F6]"
+                }`}
+              >
                 {badge}
               </span>
             )}
@@ -73,10 +77,14 @@ const Sidebar: React.FC = () => {
   );
 
   return (
-    <div className="w-[25%] sidebar overflow-y-auto">
+    <div
+      className={`md-custom:w-[25%] w-0 sidebar overflow-y-auto ${
+        !isMenuOpen ? "w-0" : "w-[300px] sm:w-full fixed md-custom:relative z-50 inset-0"
+      }`}
+    >
       {/* Menu button for small and medium devices */}
       <button
-        className="block md:hidden fixed z-50 right-0 top-0 mr-4 mt-4 text-gray-700 hover:text-gray-800 focus:outline-none"
+        className="block md-custom:hidden fixed z-50 right-0 top-0 mr-4 mt-4 text-gray-700 hover:text-gray-800 focus:outline-none"
         onClick={toggleMenu}
       >
         {isMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -84,13 +92,11 @@ const Sidebar: React.FC = () => {
 
       {/* Sidebar container */}
       <aside
-        className={`${
-          isMenuOpen ? "left-0" : "-left-full"
-        } bg-white border-r-2 border-[#EFF1F6] h-screen md:w-auto flex flex-col justify-between`}
+        className={`bg-white border-r-2 border-[#EFF1F6] h-screen md:w-auto flex flex-col justify-between`}
       >
         <div>
           {/* Logo */}
-          <div className="flex sticky justify-end items-end w-auto p-4 mb-5 fixed">
+          <div className="flex sticky justify-end items-end w-auto p-4 mb-5">
             <div className="w-[80%]">
               <img src={logoImg} alt="Logo" className="h-10" />
             </div>
@@ -117,7 +123,7 @@ const Sidebar: React.FC = () => {
               isActive={activeItem === "item_2"}
               onClick={() => setActiveItem("item_2")}
             />
-             <MenuItem
+            <MenuItem
               icon={ImUsers}
               text="Item 3"
               isActive={activeItem === "item_3"}
@@ -167,10 +173,14 @@ const Sidebar: React.FC = () => {
         </div>
 
         {/* User info */}
-         <div className="flex items-center justify-end p-4 pb-10 mt-3">
+        <div className="flex items-center justify-end p-4 pb-10 mt-3">
           <div className="w-[80%] flex items-center justify-center ">
             <div className="flex items-center">
-              <img src={avatar} alt="Avatar" className="h-8 w-8 mr-2 rounded-full" />
+              <img
+                src={avatar}
+                alt="Avatar"
+                className="h-8 w-8 mr-2 rounded-full"
+              />
               <div>
                 <p className="font-medium text-[15px] text-[#56616B]">
                   Blessing Daniels
@@ -182,16 +192,15 @@ const Sidebar: React.FC = () => {
             </div>
           </div>
         </div>
-
       </aside>
 
       {/* Backdrop to close menu */}
-      {isMenuOpen && (
+      {/* {isMenuOpen && (
         <div
           className="fixed top-0 left-0 w-full h-full bg-gray-900 opacity-50 z-40"
           onClick={toggleMenu}
         />
-      )}
+      )} */}
     </div>
   );
 };

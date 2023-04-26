@@ -14,7 +14,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({ locations, title }) => {
       },
 
       labels: locations.map(
-        (location) => `${location.country} (${location.percent}%)`
+        (location) => `${title === "Top Locations" ? location.country : location.source} (${location.percent}%)`
       ),
       plotOptions: {
         pie: {

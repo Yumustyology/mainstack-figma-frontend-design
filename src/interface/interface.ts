@@ -24,3 +24,10 @@ export interface FilterButtonProps {
     locations: LocationData[];
     title: string;
   }
+
+  export interface MenuProps {
+    isMenuOpen:  boolean;
+    appData?: any;
+    toggleMenu?: () => void;
+  }
+  

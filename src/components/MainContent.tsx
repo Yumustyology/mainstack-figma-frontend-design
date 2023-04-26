@@ -3,7 +3,7 @@ import "../App.css";
 import GraphChart from "./GraphChart";
 import Modal from "./Modal";
 import { customDateRange, filterViewsData, formatText } from "../utils/utils";
-import { FilterButtonProps } from "../interface/interface";
+import { FilterButtonProps, MenuProps } from "../interface/interface";
 import DoughnutChart from "./DoughnutChart";
 
 const views = {
@@ -48,11 +48,7 @@ const top_locations = [
 ];
 
 
-type Props = {
-  appData: any;
-}
-
-const MainContent: React.FC<Props> = ({ appData }) => {
+const MainContent: React.FC<MenuProps> = ({isMenuOpen,toggleMenu,appData}:MenuProps) => {
   const [activeBtn, setActiveBtn] = useState("all_time");
   const [startDate, setStartDate] = useState<string>(""); // Date format: "YYYY-MM-DD"
   const [endDate, setEndDate] = useState<string>("");
@@ -164,8 +160,8 @@ let {views} = appData?.graph_data
   };
 
   return (
-    <div className="main-content w-[75%] flex justify-end overflow-x-auto">
-      <div className="w-[95%]">
+    <div className={`main-content w-[100%]  md-custom:w-[75%] flex justify-end overflow-x-auto`}>
+      <div className={`w-[95%] ${!isMenuOpen && "w-[99%]"}`}>
         <header className="flex items-start flex-col">
           <p className="dashboard-txt flex flex-col text-bold justify-center items-center h-[68px] text-[#131316] text-[20px] leading-[24px]">
             Dashboard
@@ -245,13 +241,13 @@ let {views} = appData?.graph_data
         {/* graph charts */}
         <div className="z-10 w-[95%] mb-10">
           <GraphChart chartData={chartData} filter={activeBtn} />
-          <div className="flex lg:flex-row mt-6 justify-between md:flex-col">
+          <div className="flex flex-col mt-6 justify-between lg-custom:flex-row">
 
-            <div className="lg:w-[49%] sm:w-full border-2 sm:mb-5 border-[#EFF1F6] rounded-[12px] p-3 min-h-80">
+            <div className="lg-custom:w-[49%] w-full border-2 mb-5 border-[#EFF1F6] rounded-[12px] p-3 min-h-80">
               <DoughnutChart locations={appData?.top_locations} title="Top Locations" />
             </div>
 
-            <div className="lg:w-[49%] sm:w-full border-2 border-[#EFF1F6] rounded-[12px] p-3 min-h-80">
+            <div className="lg-custom:w-[49%] w-full border-2 border-[#EFF1F6] rounded-[12px] p-3 min-h-80">
               <DoughnutChart locations={appData?.top_sources} title="Top Referral source" />
             </div>
           </div>

@@ -5,7 +5,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 function App() {
   const [appData, setAppData] = useState<any>(null);
-  const [error,setError] = useState(false)
+  const [error, setError] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -18,7 +29,7 @@ function App() {
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.log(error);
-          setError(true)
+          setError(true);
         }
       }
     };
@@ -27,9 +38,33 @@ function App() {
 
     return () => {
       source.cancel("Request canceled");
-      setError(false)
+      setError(false);
     };
   }, []);
+
+
+ 
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (windowSize.width > 910) {
+    setIsMenuOpen(true)
+    }
+  }, [windowSize]);
+
+
+
 
   console.log(appData);
 
@@ -37,11 +72,19 @@ function App() {
     <div className="dashboard-container1 h-screen lg:overflow-hidden sm:overflow-visible flex">
       <>
         {/*dashboard sidebar*/}
-        <Sidebar />
+        <Sidebar isMenuOpen={isMenuOpen} toggleMenu={toggleMenu}/>
         {/* main content */}
-        {appData ? <MainContent appData={appData} /> : error ? <div className='w-full h-screen flex items-center justify-center text-[indianred] bold-font '>
-        error, something went nuts 🥜🥜, please refresh...</div> : <div className='w-full h-screen flex items-center justify-center text-[#FF5403] bold-font '>
-        loading...</div>}
+        {appData ? (
+          <MainContent isMenuOpen={isMenuOpen} appData={appData} toggleMenu={toggleMenu} />
+        ) : error ? (
+          <div className="w-full h-screen flex items-center justify-center text-[indianred] bold-font ">
+            error, something went nuts 🥜🥜, please refresh...
+          </div>
+        ) : (
+          <div className="w-full h-screen flex items-center justify-center text-[#FF5403] bold-font ">
+            loading...
+          </div>
+        )}
       </>
     </div>
   );
