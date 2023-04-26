@@ -47,12 +47,17 @@ const top_locations = [
   },
 ];
 
-const MainContent: React.FC = () => {
+
+type Props = {
+  appData: any;
+}
+
+const MainContent: React.FC<Props> = ({ appData }) => {
   const [activeBtn, setActiveBtn] = useState("all_time");
   const [startDate, setStartDate] = useState<string>(""); // Date format: "YYYY-MM-DD"
   const [endDate, setEndDate] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+let {views} = appData?.graph_data
   const FilterButton: React.FC<FilterButtonProps> = ({
     text,
     isActive,
@@ -243,11 +248,11 @@ const MainContent: React.FC = () => {
           <div className="flex lg:flex-row mt-6 justify-between md:flex-col">
 
             <div className="lg:w-[49%] sm:w-full border-2 sm:mb-5 border-[#EFF1F6] rounded-[12px] p-3 min-h-80">
-              <DoughnutChart locations={top_locations} title="Top Locations" />
+              <DoughnutChart locations={appData?.top_locations} title="Top Locations" />
             </div>
 
             <div className="lg:w-[49%] sm:w-full border-2 border-[#EFF1F6] rounded-[12px] p-3 min-h-80">
-              <DoughnutChart locations={top_locations} title="Top Referral source" />
+              <DoughnutChart locations={appData?.top_sources} title="Top Referral source" />
             </div>
           </div>
         </div>
