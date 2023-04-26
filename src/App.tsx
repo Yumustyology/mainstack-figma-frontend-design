@@ -7,7 +7,7 @@ function App() {
 
 
   return (
-    <div className='dashboard-container1 min-h-screen overflow-hidden md:overflow-visible flex'>
+    <div className='dashboard-container1 min-h-screen lg:overflow-hidden sm:overflow-visible flex'>
       <>
          {/*dashboard sidebar*/}
          <Sidebar />
