@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 function App() {
   const [appData, setAppData] = useState<any>(null);
+  const [error,setError] = useState(false)
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -17,6 +18,7 @@ function App() {
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.log(error);
+          setError(true)
         }
       }
     };
@@ -25,18 +27,21 @@ function App() {
 
     return () => {
       source.cancel("Request canceled");
+      setError(false)
     };
   }, []);
 
   console.log(appData);
 
   return (
-    <div className="dashboard-container1 min-h-screen lg:overflow-hidden sm:overflow-visible flex">
+    <div className="dashboard-container1 h-screen lg:overflow-hidden sm:overflow-visible flex">
       <>
         {/*dashboard sidebar*/}
         <Sidebar />
         {/* main content */}
-        {appData ? <MainContent appData={appData} /> : "loading"}
+        {appData ? <MainContent appData={appData} /> : error ? <div className='w-full h-screen flex items-center justify-center text-[indianred] bold-font '>
+        error, something went nuts 🥜🥜, please refresh...</div> : <div className='w-full h-screen flex items-center justify-center text-[#FF5403] bold-font '>
+        loading...</div>}
       </>
     </div>
   );

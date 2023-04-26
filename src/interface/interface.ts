@@ -12,8 +12,15 @@ export interface FilterButtonProps {
     filter: String;
   }
   
+
+  export interface LocationData {
+    country?: string;
+    count: number;
+    percent: number;
+    source?: string;
+  }
+  
   export interface DoughnutChartProps {
-    data: {
-      [key: string]: number;
-    };
+    locations: LocationData[];
+    title: string;
   }
